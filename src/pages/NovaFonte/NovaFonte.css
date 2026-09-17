@@ -1,0 +1,112 @@
+/* ÍCONE HOME */
+.home-icon-area {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 25px;
+}
+
+.home-icon {
+  width: 80px;
+  height: 90px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.home-icon:hover {
+  transform: scale(1.12);
+}
+
+.fonte-wrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.fonte-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+/* ÁREA DE UPLOAD */
+.upload-area {
+  background: #f7faff;
+  border: 2px dashed #1976d2;
+  padding: 40px;
+  border-radius: 14px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.upload-text {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.btn-primary {
+  background: #1976d2;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #125a9c;
+}
+
+/* BOTÕES DE BANCO DE DADOS */
+.db-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-db {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+  min-width: 220px;
+}
+
+.btn-db.mongo {
+  background: #4caf50;
+}
+
+.btn-db.mongo:hover {
+  background: #3a8c3f;
+}
+
+.btn-db.mysql {
+  background: #ff9800;
+}
+
+.btn-db.mysql:hover {
+  background: #cc7a00;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+  .fonte-title {
+    font-size: 20px;
+  }
+
+  .upload-area {
+    padding: 25px;
+  }
+
+  .btn-db {
+    width: 100%;
+  }
+}
