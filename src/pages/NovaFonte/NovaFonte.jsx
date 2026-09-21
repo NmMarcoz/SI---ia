@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "./NovaFonte.css";
 import { useNavigate } from "react-router-dom";
 import { uploadArquivo } from "../../services/iaService";
+import Logo from "../../components/Logo";
 
 export default function NovaFonte() {
   const navigate = useNavigate();
@@ -48,70 +49,77 @@ export default function NovaFonte() {
   };
 
   return (
-    <div className="fonte-wrapper">
+    <div className="fonte">
+      <nav className="fonte__nav">
+        <button className="fonte__back" onClick={() => navigate("/")} aria-label="Voltar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <Logo size="sm" onClick={() => navigate("/")} />
+      </nav>
 
-      {/* ÍCONE HOME */}
-      <div className="home-icon-area">
-        <img
-          src="/icon-home.png"
-          alt="Home"
-          className="home-icon"
-          onClick={() => navigate("/")}
-        />
-      </div>
-
-      <h1 className="fonte-title">
-        Crie resumos a partir dos seus arquivos ou conectando a bancos de dados
-      </h1>
-
-      {/* ÁREA DE UPLOAD */}
-      <div
-        className={`upload-area ${dragOver ? "drag-over" : ""}`}
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={handleDrop}
-      >
-        <p className="upload-text">
-          {uploading
-            ? "Processando arquivos..."
-            : "Arraste e solte aqui seus ficheiros .PDF ou .XLSX"}
+      <div className="fonte__content">
+        <h1 className="fonte__title">Adicionar fontes</h1>
+        <p className="fonte__subtitle">
+          Envie arquivos PDF ou XLSX, ou conecte a um banco de dados
         </p>
 
-        <input
-          type="file"
-          ref={fileInputRef}
-          style={{ display: "none" }}
-          accept=".pdf,.xlsx"
-          multiple
-          onChange={handleFileSelect}
-        />
-
-        <button
-          className="btn-primary"
-          disabled={uploading}
-          onClick={() => fileInputRef.current.click()}
+        <div
+          className={`fonte__upload ${dragOver ? "fonte__upload--active" : ""}`}
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
         >
-          {uploading ? "Enviando..." : "Carregar Arquivos"}
-        </button>
-      </div>
+          <svg className="fonte__upload-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
 
-      {/* BOTÕES DE CONEXÃO */}
-      <div className="db-buttons">
+          <p className="fonte__upload-text">
+            {uploading
+              ? "Processando arquivos..."
+              : "Arraste e solte seus arquivos aqui"}
+          </p>
+          <p className="fonte__upload-hint">PDF ou XLSX</p>
 
-        <button
-          className="btn-db mongo"
-          onClick={() => navigate("/conectar-mongo")}
-        >
-          Conectar ao MongoDB
-        </button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            accept=".pdf,.xlsx"
+            multiple
+            onChange={handleFileSelect}
+          />
 
-        <button
-          className="btn-db mysql"
-          onClick={() => navigate("/conectar-mysql")}
-        >
-          Conectar ao MySQL
-        </button>
+          <button
+            className="fonte__upload-btn"
+            disabled={uploading}
+            onClick={() => fileInputRef.current.click()}
+          >
+            {uploading ? "Enviando..." : "Escolher arquivos"}
+          </button>
+        </div>
 
+        <div className="fonte__divider">
+          <span>ou conecte a um banco</span>
+        </div>
+
+        <div className="fonte__db-buttons">
+          <button
+            className="fonte__db-btn fonte__db-btn--mongo"
+            onClick={() => navigate("/conectar-mongo")}
+          >
+            MongoDB
+          </button>
+          <button
+            className="fonte__db-btn fonte__db-btn--mysql"
+            onClick={() => navigate("/conectar-mysql")}
+          >
+            MySQL
+          </button>
+        </div>
       </div>
     </div>
   );

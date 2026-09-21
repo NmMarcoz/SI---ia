@@ -6,7 +6,7 @@ import uvicorn
 from rag import RAGPipeline
 from ingestors import pdf, xlsx, mysql, mongo
 
-app = FastAPI(title="BoraIA-MA API")
+app = FastAPI(title="SL-IA API")
 
 app.add_middleware(
     CORSMiddleware,

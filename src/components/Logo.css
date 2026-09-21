@@ -1,0 +1,79 @@
+.sl-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+  font-family: "Inter", sans-serif;
+}
+
+.sl-logo[role="button"] {
+  cursor: pointer;
+}
+
+.sl-logo__mark {
+  background: var(--color-text, #1e293b);
+  color: #fff;
+  font-weight: 800;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.sl-logo__sep {
+  width: 2px;
+  background: var(--color-border, #e2e8f0);
+  margin: 0 6px;
+  align-self: stretch;
+  border-radius: 1px;
+}
+
+.sl-logo__text {
+  color: var(--color-primary, #4f46e5);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+/* Small */
+.sl-logo--sm .sl-logo__mark {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.sl-logo--sm .sl-logo__sep {
+  margin: 0 4px;
+  height: 18px;
+}
+.sl-logo--sm .sl-logo__text {
+  font-size: 15px;
+}
+
+/* Medium */
+.sl-logo--md .sl-logo__mark {
+  padding: 7px 14px;
+  font-size: 17px;
+}
+.sl-logo--md .sl-logo__sep {
+  height: 26px;
+}
+.sl-logo--md .sl-logo__text {
+  font-size: 22px;
+}
+
+/* Large */
+.sl-logo--lg .sl-logo__mark {
+  padding: 12px 22px;
+  font-size: 28px;
+  border-radius: 12px;
+}
+.sl-logo--lg .sl-logo__sep {
+  margin: 0 8px;
+  height: 40px;
+  width: 3px;
+}
+.sl-logo--lg .sl-logo__text {
+  font-size: 36px;
+}
