@@ -1,4 +1,4 @@
-# BoraIA-MA
+# SL-IA
 
 Sistema de Chat com Inteligencia Artificial que permite ao usuario criar bases de conhecimento a partir de diferentes fontes de dados (PDF, XLSX, MySQL, MongoDB) e interagir com elas por meio de perguntas em linguagem natural.
 

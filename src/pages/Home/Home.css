@@ -1,146 +1,35 @@
-/* LAYOUT GERAL */
-.home-wrapper {
-  padding: 30px;
-  font-family: "Inter", Arial, sans-serif;
-  color: #333;
-}
-
-/* TOPO */
-.home-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.logo {
+.home {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  font-size: 26px;
-  font-weight: 700;
+  justify-content: center;
 }
 
-.logo-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
-}
-
-.btn-settings {
-  background: transparent;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn-settings:hover {
-  background: #f0f0f0;
-}
-
-/* SEÇÕES */
-.section {
-  margin-bottom: 40px;
-}
-
-.section-title {
-  font-size: 20px;
-  margin-bottom: 16px;
-}
-
-/* GRID EM DESTAQUE */
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-}
-
-.featured-card {
-  height: 120px;
-  background: #e9eef5;
-  border-radius: 12px;
-}
-
-.featured-card.empty {
-  opacity: 0.6;
-}
-
-/* RECENTES */
-.recent-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.sort-select {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.recent-grid {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.recent-card {
-  background: white;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.recent-card:hover {
-  transform: translateY(-3px);
-}
-
-.recent-card h3 {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.date, .origens {
-  font-size: 14px;
-  color: #666;
-}
-
-/* CARD CRIAR NOVO */
-.recent-card.new {
+.home__center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: #f7faff;
-  border: 2px dashed #1976d2;
+  gap: 16px;
 }
 
-.plus-icon {
-  font-size: 40px;
-  color: #1976d2;
-  margin-bottom: 10px;
+.home__tagline {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
 }
 
-/* RESPONSIVIDADE */
-@media (max-width: 600px) {
-  .home-wrapper {
-    padding: 20px;
-  }
+.home__start {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition);
+}
 
-  .logo {
-    font-size: 20px;
-  }
-
-  .logo-icon {
-    width: 32px;
-    height: 32px;
-  }
-
-  .section-title {
-    font-size: 18px;
-  }
+.home__start:hover {
+  background: var(--color-primary-hover);
 }

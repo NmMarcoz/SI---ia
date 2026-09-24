@@ -1,112 +1,177 @@
-/* ÍCONE HOME */
-.home-icon-area {
+.fonte {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.fonte__nav {
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 25px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
 }
 
-.home-icon {
-  width: 80px;
-  height: 90px;
+.fonte__back {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.home-icon:hover {
-  transform: scale(1.12);
-}
-
-.fonte-wrapper {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: "Inter", Arial, sans-serif;
-}
-
-.fonte-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 40px;
-}
-
-/* ÁREA DE UPLOAD */
-.upload-area {
-  background: #f7faff;
-  border: 2px dashed #1976d2;
-  padding: 40px;
-  border-radius: 14px;
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.upload-text {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #555;
-}
-
-.btn-primary {
-  background: #1976d2;
-  color: white;
-  padding: 14px 24px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
-}
-
-.btn-primary:hover {
-  background: #125a9c;
-}
-
-/* BOTÕES DE BANCO DE DADOS */
-.db-buttons {
   display: flex;
-  gap: 20px;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 
-.btn-db {
-  padding: 14px 24px;
-  border: none;
-  border-radius: 8px;
+.fonte__back:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.fonte__content {
+  text-align: center;
+}
+
+.fonte__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.fonte__subtitle {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 40px;
+}
+
+/* Upload area */
+.fonte__upload {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  margin-bottom: 32px;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.fonte__upload--active,
+.fonte__upload:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.fonte__upload-icon {
+  color: var(--color-text-tertiary);
+  margin-bottom: 16px;
+}
+
+.fonte__upload-text {
   font-size: 16px;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.fonte__upload-hint {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 24px;
+}
+
+.fonte__upload-btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  color: white;
-  transition: 0.3s;
-  min-width: 220px;
+  transition: background var(--transition);
 }
 
-.btn-db.mongo {
-  background: #4caf50;
+.fonte__upload-btn:hover {
+  background: var(--color-primary-hover);
 }
 
-.btn-db.mongo:hover {
-  background: #3a8c3f;
+.fonte__upload-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.btn-db.mysql {
-  background: #ff9800;
+/* Divider */
+.fonte__divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
 }
 
-.btn-db.mysql:hover {
-  background: #cc7a00;
+.fonte__divider::before,
+.fonte__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
 }
 
-/* RESPONSIVIDADE */
+/* DB buttons */
+.fonte__db-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.fonte__db-btn {
+  padding: 10px 28px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-width: 140px;
+  border: 1.5px solid;
+  background: transparent;
+}
+
+.fonte__db-btn--mongo {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.fonte__db-btn--mongo:hover {
+  background: var(--color-success);
+  color: #fff;
+}
+
+.fonte__db-btn--mysql {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.fonte__db-btn--mysql:hover {
+  background: var(--color-warning);
+  color: #fff;
+}
+
 @media (max-width: 600px) {
-  .fonte-title {
-    font-size: 20px;
+  .fonte {
+    padding: 20px 16px;
   }
 
-  .upload-area {
-    padding: 25px;
+  .fonte__upload {
+    padding: 32px 20px;
   }
 
-  .btn-db {
+  .fonte__db-buttons {
+    flex-direction: column;
+  }
+
+  .fonte__db-btn {
     width: 100%;
   }
 }

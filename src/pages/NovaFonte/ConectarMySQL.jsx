@@ -34,6 +34,7 @@ export default function ConectarMySQL() {
 
   return (
     <div className="db-wrapper">
+      <button className="db-back" onClick={() => navigate(-1)}>&larr; Voltar</button>
       <h1>Conectar ao MySQL</h1>
 
       <input placeholder="Host" value={host} onChange={e => setHost(e.target.value)} />

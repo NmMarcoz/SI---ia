@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Perguntas.css";
 import { useNavigate } from "react-router-dom";
 import { perguntarIA, listarFontes } from "../../services/iaService";
+import Logo from "../../components/Logo";
 
 export default function Perguntas() {
   const navigate = useNavigate();
@@ -47,101 +48,94 @@ export default function Perguntas() {
       const data = await perguntarIA(pergunta, fontes);
       setChat(prev => [...prev, { tipo: "ia", texto: data.resposta }]);
     } catch {
-      setChat(prev => [...prev, { tipo: "ia", texto: "Erro ao conectar com o backend. Verifique se a API está rodando." }]);
+      setChat(prev => [...prev, { tipo: "ia", texto: "Erro ao conectar com o backend." }]);
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="tela3-wrapper">
+    <div className="chat-page">
+      <nav className="chat-page__nav">
+        <div className="chat-page__nav-left">
+          <button className="chat-page__back" onClick={() => navigate(-1)} aria-label="Voltar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <Logo size="sm" onClick={() => navigate("/")} />
+        </div>
+        <button className="chat-page__add-fonte" onClick={() => navigate("/nova-fonte")}>
+          + Adicionar fontes
+        </button>
+      </nav>
 
-      {/* ÍCONES SUPERIORES */}
-      <div className="tela3-top-icons">
-        <img
-          src="/icon-home.png"
-          className="icon-btn"
-          onClick={() => navigate("/")}
-          alt="Home"
-        />
-
-        <img
-          src="/icon-voltar.png"
-          className="icon-btn"
-          onClick={() => navigate(-1)}
-          alt="Voltar"
-        />
-      </div>
-
-      <div className="tela3-content">
-
-        {/* COLUNA ESQUERDA — FONTES */}
-        <div className="fontes-box">
-          <div className="fontes-header">
-            <h2 className="fontes-title">
-              Fontes
-            </h2>
-
-            <button className="btn-add" onClick={() => navigate("/nova-fonte")}>
-              + Adicionar fontes
-            </button>
-          </div>
-
-          <div className="fontes-list">
+      <div className="chat-page__layout">
+        <aside className="chat-page__sidebar">
+          <h3 className="chat-page__sidebar-title">Fontes</h3>
+          <div className="chat-page__sources">
             {fontes.length === 0 && (
-              <p style={{ color: "#999", fontSize: 14 }}>
-                Nenhuma fonte carregada. Adicione arquivos ou conecte um banco.
-              </p>
+              <p className="chat-page__empty">Nenhuma fonte carregada.</p>
             )}
             {fontes.map(f => (
-              <label key={f.id} className="fonte-item">
+              <label key={f.id} className="chat-page__source">
                 <input
                   type="checkbox"
                   checked={f.selecionado}
                   onChange={() => toggleFonte(f.id)}
                 />
-                {f.nome}
+                <span className="chat-page__source-name">{f.nome}</span>
               </label>
             ))}
           </div>
-        </div>
+        </aside>
 
-        {/* COLUNA DIREITA — CHAT */}
-        <div className="chat-box">
-          <h2 className="chat-title">Chat</h2>
-
-          <div className="chat-area">
+        <main className="chat-page__main">
+          <div className="chat-page__messages">
+            {chat.length === 0 && !loading && (
+              <div className="chat-page__placeholder">
+                <Logo size="lg" />
+                <p>Faça uma pergunta sobre seus dados</p>
+              </div>
+            )}
             {chat.map((msg, index) => (
-              <div
-                key={index}
-                className={`chat-msg ${msg.tipo === "user" ? "user" : "ia"}`}
-              >
-                {msg.texto}
+              <div key={index} className={`chat-page__msg chat-page__msg--${msg.tipo}`}>
+                <div className="chat-page__msg-avatar">
+                  {msg.tipo === "user" ? "Eu" : "IA"}
+                </div>
+                <div className="chat-page__msg-text">{msg.texto}</div>
               </div>
             ))}
             {loading && (
-              <div className="chat-msg ia">Pensando...</div>
+              <div className="chat-page__msg chat-page__msg--ia">
+                <div className="chat-page__msg-avatar">IA</div>
+                <div className="chat-page__msg-text chat-page__msg-text--loading">
+                  <span className="chat-page__dot"></span>
+                  <span className="chat-page__dot"></span>
+                  <span className="chat-page__dot"></span>
+                </div>
+              </div>
             )}
             <div ref={chatEndRef} />
           </div>
 
-          {/* INPUT DO CHAT */}
-          <div className="chat-input-area">
+          <div className="chat-page__input-area">
             <input
               type="text"
-              placeholder="Comece a escrever..."
+              className="chat-page__input"
+              placeholder="Escreva sua pergunta..."
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && enviarMensagem()}
               disabled={loading}
             />
-
-            <button className="btn-send" onClick={enviarMensagem} disabled={loading}>
-              <img src="/icon-send.png" alt="Enviar" />
+            <button className="chat-page__send" onClick={enviarMensagem} disabled={loading}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+              </svg>
             </button>
           </div>
-        </div>
-
+        </main>
       </div>
     </div>
   );
