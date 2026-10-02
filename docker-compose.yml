@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: boraia-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: universidade
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./seeds/mysql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
+
+  mongo:
+    image: mongo:7
+    container_name: boraia-mongo
+    environment:
+      MONGO_INITDB_DATABASE: universidade
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./seeds/mongo/seed.js:/docker-entrypoint-initdb.d/seed.js:ro

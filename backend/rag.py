@@ -1,3 +1,5 @@
+import time
+
 import chromadb
 from sentence_transformers import SentenceTransformer
 
@@ -45,7 +47,22 @@ class RAGPipeline:
         if not results["documents"][0]:
             return "Não encontrei informações relevantes nas fontes selecionadas."
 
-        context = "\n\n".join(results["documents"][0])
+        docs = results["documents"][0]
+        metas = results["metadatas"][0]
+        distances = results.get("distances", [[]])[0]
+
+        context = "\n\n".join(docs)
+
+        # Build reasoning from retrieved chunks
+        reasoning_lines = [f"Encontrados {len(docs)} trecho(s) relevante(s):\n"]
+        for i, (doc, meta) in enumerate(zip(docs, metas)):
+            source = meta.get("source", "?")
+            dist = f" (dist: {distances[i]:.3f})" if i < len(distances) else ""
+            preview = doc[:120].replace("\n", " ")
+            if len(doc) > 120:
+                preview += "..."
+            reasoning_lines.append(f"{i+1}. [{source}]{dist}\n   {preview}")
+        raciocinio = "\n".join(reasoning_lines)
 
         prompt = (
             "Com base no seguinte contexto, responda a pergunta do usuário.\n\n"
@@ -54,7 +71,11 @@ class RAGPipeline:
             "Responda de forma clara e objetiva, baseando-se apenas no contexto fornecido."
         )
 
-        return self.llm.generate(prompt)
+        start = time.time()
+        answer = self.llm.generate(prompt)
+        elapsed = round(time.time() - start, 2)
+
+        return {"resposta": answer, "raciocinio": raciocinio, "tempo": elapsed}
 
     def list_sources(self) -> list[str]:
         all_metadatas = self.collection.get()["metadatas"]

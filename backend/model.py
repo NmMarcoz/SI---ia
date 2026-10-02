@@ -34,7 +34,7 @@ class LLM:
         self._loaded = True
         print("Modelo carregado.")
 
-    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
+    def generate(self, prompt: str, max_new_tokens: int = 256) -> str:
         self.load()
 
         messages = [
@@ -57,9 +57,7 @@ class LLM:
             output = self.model.generate(
                 **inputs,
                 max_new_tokens=max_new_tokens,
-                temperature=0.7,
-                do_sample=True,
-                top_p=0.9,
+                do_sample=False,
             )
 
         response = self.tokenizer.decode(

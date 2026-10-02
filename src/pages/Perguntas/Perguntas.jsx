@@ -7,11 +7,14 @@ import Logo from "../../components/Logo";
 export default function Perguntas() {
   const navigate = useNavigate();
   const chatEndRef = useRef(null);
+  const timerRef = useRef(null);
 
   const [fontes, setFontes] = useState([]);
   const [mensagem, setMensagem] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [expandedThinking, setExpandedThinking] = useState({});
 
   useEffect(() => {
     listarFontes()
@@ -30,10 +33,26 @@ export default function Perguntas() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
+  useEffect(() => {
+    if (loading) {
+      setElapsed(0);
+      timerRef.current = setInterval(() => {
+        setElapsed((prev) => prev + 0.1);
+      }, 100);
+    } else {
+      clearInterval(timerRef.current);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [loading]);
+
   const toggleFonte = (id) => {
     setFontes(fontes.map(f =>
       f.id === id ? { ...f, selecionado: !f.selecionado } : f
     ));
+  };
+
+  const toggleThinking = (index) => {
+    setExpandedThinking((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const enviarMensagem = async () => {
@@ -46,9 +65,14 @@ export default function Perguntas() {
 
     try {
       const data = await perguntarIA(pergunta, fontes);
-      setChat(prev => [...prev, { tipo: "ia", texto: data.resposta }]);
+      setChat(prev => [...prev, {
+        tipo: "ia",
+        texto: data.resposta,
+        raciocinio: data.raciocinio || "",
+        tempo: data.tempo || 0,
+      }]);
     } catch {
-      setChat(prev => [...prev, { tipo: "ia", texto: "Erro ao conectar com o backend." }]);
+      setChat(prev => [...prev, { tipo: "ia", texto: "Erro ao conectar com o backend.", raciocinio: "", tempo: 0 }]);
     }
 
     setLoading(false);
@@ -95,7 +119,7 @@ export default function Perguntas() {
             {chat.length === 0 && !loading && (
               <div className="chat-page__placeholder">
                 <Logo size="lg" />
-                <p>Faça uma pergunta sobre seus dados</p>
+                <p>Faca uma pergunta sobre seus dados</p>
               </div>
             )}
             {chat.map((msg, index) => (
@@ -103,16 +127,45 @@ export default function Perguntas() {
                 <div className="chat-page__msg-avatar">
                   {msg.tipo === "user" ? "Eu" : "IA"}
                 </div>
-                <div className="chat-page__msg-text">{msg.texto}</div>
+                <div className="chat-page__msg-content">
+                  {msg.tipo === "ia" && msg.raciocinio && (
+                    <div className="chat-page__thinking">
+                      <button
+                        className="chat-page__thinking-toggle"
+                        onClick={() => toggleThinking(index)}
+                      >
+                        <svg
+                          className={`chat-page__thinking-arrow ${expandedThinking[index] ? "chat-page__thinking-arrow--open" : ""}`}
+                          width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                        >
+                          <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                        Raciocinio
+                      </button>
+                      {expandedThinking[index] && (
+                        <div className="chat-page__thinking-content">
+                          {msg.raciocinio}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="chat-page__msg-text">{msg.texto}</div>
+                  {msg.tipo === "ia" && msg.tempo > 0 && (
+                    <span className="chat-page__msg-time">{msg.tempo}s</span>
+                  )}
+                </div>
               </div>
             ))}
             {loading && (
               <div className="chat-page__msg chat-page__msg--ia">
                 <div className="chat-page__msg-avatar">IA</div>
-                <div className="chat-page__msg-text chat-page__msg-text--loading">
-                  <span className="chat-page__dot"></span>
-                  <span className="chat-page__dot"></span>
-                  <span className="chat-page__dot"></span>
+                <div className="chat-page__msg-content">
+                  <div className="chat-page__msg-text chat-page__msg-text--loading">
+                    <span className="chat-page__dot"></span>
+                    <span className="chat-page__dot"></span>
+                    <span className="chat-page__dot"></span>
+                    <span className="chat-page__timer">{elapsed.toFixed(1)}s</span>
+                  </div>
                 </div>
               </div>
             )}

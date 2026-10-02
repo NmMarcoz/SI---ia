@@ -67,8 +67,10 @@ async def perguntar(req: PerguntaRequest):
     fontes_selecionadas = [
         f["nome"] for f in req.fontes if f.get("selecionado")
     ]
-    resposta = rag.query(req.pergunta, fontes_selecionadas)
-    return {"resposta": resposta}
+    resultado = rag.query(req.pergunta, fontes_selecionadas)
+    if isinstance(resultado, str):
+        return {"resposta": resultado, "raciocinio": "", "tempo": 0}
+    return resultado
 
 
 @app.get("/fontes")

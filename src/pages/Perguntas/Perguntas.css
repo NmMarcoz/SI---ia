@@ -190,12 +190,18 @@
   color: var(--color-text-secondary);
 }
 
+.chat-page__msg-content {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .chat-page__msg-text {
   padding: 12px 16px;
   border-radius: var(--radius-md);
   font-size: 14px;
   line-height: 1.6;
-  max-width: 75%;
 }
 
 .chat-page__msg--user .chat-page__msg-text {
@@ -206,6 +212,70 @@
 .chat-page__msg--ia .chat-page__msg-text {
   background: var(--color-border-light);
   color: var(--color-text);
+}
+
+/* Thinking / Reasoning */
+.chat-page__thinking {
+  margin-bottom: 2px;
+}
+
+.chat-page__thinking-toggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+}
+
+.chat-page__thinking-toggle:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.chat-page__thinking-arrow {
+  transition: transform 0.2s ease;
+}
+
+.chat-page__thinking-arrow--open {
+  transform: rotate(90deg);
+}
+
+.chat-page__thinking-content {
+  margin-top: 6px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Timer */
+.chat-page__msg-time {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  padding-left: 4px;
+}
+
+.chat-page__timer {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-left: 8px;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Loading dots */
